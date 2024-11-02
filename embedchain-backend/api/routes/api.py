@@ -117,7 +117,8 @@ async def handle_search(query: str, user_id: str):
 @router.get("/")
 async def root():
     print("hi")
-    return responses.RedirectResponse(url="/docs")
+    # return responses.RedirectResponse(url="/docs")
+    return {"working"}
 
 # if __name__ == "__main__":
 #     pass
