@@ -4,6 +4,7 @@
 env/
 db/
 .venv
+embedchain-backend/.env
 embedchain-backend/.venv
 
 # dependencies
