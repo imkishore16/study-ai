@@ -24,13 +24,13 @@ async def token_check_middleware(request: Request, call_next): #call_next is a c
     return response
 
 
-if __name__ == "__main__":
-    # print(pyth)
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8000,
-        log_level="info",
-        reload=True,
-        timeout_keep_alive=600,
-)
+# if __name__ == "__main__":
+#     # print(pyth)
+#     uvicorn.run(
+#         "main:app",
+#         host="0.0.0.0",
+#         port=8000,
+#         log_level="info",
+#         reload=True,
+#         timeout_keep_alive=600,
+# )
