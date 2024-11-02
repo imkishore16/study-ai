@@ -2,22 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "embedchain-backend/main.py",
+        "src": "main.py",
         "use": "@vercel/python"
-      },
-      {
-        "src": "next.config.js",
-        "use": "@vercel/next"
       }
     ],
     "routes": [
       {
-        "src": "^/api/(.*)$",
-        "dest": "embedchain-backend/main.py"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/"
+        "src": "/(.*)",  
+        "dest": "main.py"
       }
     ]
   }
