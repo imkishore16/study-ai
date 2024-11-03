@@ -20,15 +20,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.middleware("http") #decorator is used to define a middleware function that will intercept incoming HTTP requests before they are processed by the main request handler and it will handle only http requests
-async def token_check_middleware(request: Request, call_next): #call_next is a callback function that will call the next middleware or the main request handler
-    token = request.headers.get("Authorization")
+# @app.middleware("http") #decorator is used to define a middleware function that will intercept incoming HTTP requests before they are processed by the main request handler and it will handle only http requests
+# async def token_check_middleware(request: Request, call_next): #call_next is a callback function that will call the next middleware or the main request handler
+#     token = request.headers.get("Authorization")
 
-    if request.url.path.startswith("/api/v1"):
-        if token != env.get("AUTH_TOKEN"):
-            raise HTTPException(status_code=401, detail="Unauthorized")
-    response = await call_next(request)
-    return response
+#     if request.url.path.startswith("/api/v1"):
+#         if token != env.get("AUTH_TOKEN"):
+#             raise HTTPException(status_code=401, detail="Unauthorized")
+#     response = await call_next(request)
+#     return response
 
 
 # if __name__ == "__main__":
