@@ -1,5 +1,6 @@
 import { env } from "@/env";
 import { auth } from "@/lib/auth";
+import Concept2 from "next-auth/providers/concept2";
 
 export const runtime = "edge";
 
@@ -15,6 +16,8 @@ export async function POST(req: Request): Promise<Response> {
 
     const body = await req.json() as { transcript: string };
     const { transcript } = body;
+    // console.log(body)
+    console.log(transcript)
 
     try {
         const saveEmbedding = await fetch(`${env.BACKEND_BASE_URL}/api/v1/add`, {
@@ -25,8 +28,8 @@ export async function POST(req: Request): Promise<Response> {
           },
           body: JSON.stringify({
             source: transcript,
-            user: user.user.email + "-study",
-            note_id: '1',
+            user: user.user.email,
+            note_id: new Date().getTime(),
           }),
         });
     

@@ -32,7 +32,7 @@ export function UserInterface() {
   const [micOpen, setMicOpen] = useState(false);
   const [microphone, setMicrophone] = useState<MediaRecorder | null>();
   const [userMedia, setUserMedia] = useState<MediaStream | null>();
-  const [caption, setCaption] = useState<string>('');
+  const [caption, setCaption] = useState<string|null>(null);
   const [messageList, setMessageList] = useState<Messages>([
     {
       role: 'AI',
@@ -213,20 +213,23 @@ export function UserInterface() {
                       throw new Error('Invalid YouTube video link');
                     }
 
-                    const reque = await fetch('/api/getFullTranscript?url=' + ytVidLink);
+                    // const reque = await fetch('/api/getFullTranscript?url=' + ytVidLink);
+                    const reque = await fetch('/api/getFullTranscript?url=' + videoId);
                     if (reque.status !== 200) {
                       console.log(reque);
                     } 
-                    const data = await reque.json() as { transcript: string };
-                    setCaption(data.transcript)
+                    const data = await reque.json() //as { transcript: string };
+                    setCaption(data as string)
                     setLoading(false);
+                    setLoading(true);
                     await fetch('/api/makeEmbedding', {
                       method: 'POST',
                       body: JSON.stringify({
-                        transcript: data.transcript,
+                        transcript: data
                       })
                     }).then((res) => res.text()).then((text) => console.log(text))
-                      .catch((e) => console.error(e));
+                    .catch((e) => console.error(e));
+                    setLoading(false);
                   }}
                 >
                   {isLoading? 'Loading...' : 'Load video'}
@@ -257,6 +260,24 @@ export function UserInterface() {
             />
           )}
           <div className="flex flex-col gap-2">{caption}</div>
+          <Button
+                  disabled={caption==null}
+                  onClick={async () => {
+                    
+                    // setCaption(caption)
+                    setLoading(true);
+                    await fetch('/api/makeEmbedding', {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        transcript: caption
+                      })
+                    }).then((res) => res.text()).then((text) => console.log(text))
+                    .catch((e) => console.error(e));
+                    setLoading(false);
+                  }}
+                >
+                  Add data
+              </Button>
         </div>
       </div>
       <div className="rounded border border-gray-200 dark:border-gray-800 p-4 overflow-auto min-w-[1/3]">

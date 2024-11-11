@@ -34,6 +34,7 @@ export async function GET(request: Request) {
   if (newKeyError) {
     return NextResponse.json(newKeyError);
   }
+  console.log(NextResponse.json({ ...newKeyResult, url }).json())
 
   return NextResponse.json({ ...newKeyResult, url });
 }

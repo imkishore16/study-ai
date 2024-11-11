@@ -3,7 +3,7 @@ from fastapi import APIRouter, responses
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-load_dotenv(".env")
+load_dotenv()
 
 router = APIRouter()
 
@@ -106,11 +106,13 @@ async def handle_search(query: str, user_id: str):
     Accepts 'query' and 'session_id' as query parameters.
     """
     try:
-        response = ec_app.query(query, citations=True, where={"user": {"$eq": user_id}}) # where parameter is used for metadata filtering -> A dictionary of key-value pairs to filter the chunks from the vector database
+        # response = ec_app.query(query, citations=False, where={"user": {"$eq": user_id}} ) # where parameter is used for metadata filtering -> A dictionary of key-value pairs to filter the chunks from the vector database
+        response = ec_app.chat(query, citations=True, where={"user": {"$eq": user_id}} ) # where parameter is used for metadata filtering -> A dictionary of key-value pairs to filter the chunks from the vector database
+
         # "$eq" is commonly used in database queries as an equality operator
     except Exception as e:
         response = f"An error occurred: Error message: {str(e)}"  # noqa:E501
-
+    
     return response
 
 
@@ -119,6 +121,3 @@ async def root():
     print("hi")
     # return responses.RedirectResponse(url="/docs")
     return {"working"}
-
-# if __name__ == "__main__":
-#     pass

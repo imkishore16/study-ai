@@ -47,7 +47,7 @@ export async function GET(req: Request): Promise<Response> {
   }
 
   const aiResponse = await fetch(
-    `${env.BACKEND_BASE_URL}/api/v1/search?query=${prompt}&user_id=${
+    `${env.BACKEND_BASE_URL}/api/v1/chat?query=${prompt}&user_id=${
       user.user.email + "-study"
     }`,
     {
